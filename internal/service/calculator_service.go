@@ -1,6 +1,8 @@
 package service
 
-import pc "palettecalculator"
+import (
+	pc "palettecalculator"
+)
 
 type PaletteClient interface {
 	CalculatePredominantColor(file string) (*pc.Color, error)
@@ -34,6 +36,7 @@ func NewCalculatorService() (*calculatorService, error) {
 
 func (cs *calculatorService) CalculatePredominant(file string) (*pc.Color, error) {
 	color, err := cs.pc.CalculatePredominantColor(file)
+
 	if err != nil {
 		return nil, err
 	}

@@ -1,6 +1,7 @@
-package palatte_api
+package main
 
 import (
+	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"palatte-api/internal/httptransport"
@@ -14,6 +15,12 @@ func main() {
 	}
 	handler := httptransport.NewHandler(calcService)
 
-	err = http.ListenAndServe(":8080", handler)
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+	})
+	h := c.Handler(handler)
+
+	err = http.ListenAndServe(":8080", h)
 	log.Fatalln(err)
 }

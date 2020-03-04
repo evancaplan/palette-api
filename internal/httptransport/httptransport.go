@@ -15,11 +15,12 @@ type handler struct {
 func NewHandler(c service.Calculator) http.Handler {
 	h := &handler{c}
 	r := mux.NewRouter()
-	r.HandleFunc("/predominant", h.calculatePredominant)
-	r.HandleFunc("/complimentary", h.calculateComplimentary)
-	r.HandleFunc("/split-complimentary", h.calculateSplitComplimentary)
-	r.HandleFunc("/triadic", h.calculateTriadic)
-	r.HandleFunc("/tetradic", h.calculateTetradic)
+	r.HandleFunc("/predominant", h.calculatePredominant).Methods("POST")
+	r.HandleFunc("/complimentary", h.calculateComplimentary).Methods("POST")
+	r.HandleFunc("/split-complimentary", h.calculateSplitComplimentary).Methods("POST")
+	r.HandleFunc("/triadic", h.calculateTriadic).Methods("POST")
+	r.HandleFunc("/tetradic", h.calculateTetradic).Methods("POST")
+
 	return r
 }
 
@@ -37,7 +38,7 @@ func (h *handler) calculatePredominant(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	color, err := json.Marshal(c)
+	color, err := json.MarshalIndent(c, "", "\t")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -56,7 +57,7 @@ func (h *handler) calculateComplimentary(w http.ResponseWriter, r *http.Request)
 
 	c := h.Calculator.CalculateComplimentary(&inColor)
 
-	color, err := json.Marshal(c)
+	color, err := json.MarshalIndent(c, "", "\t")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -74,7 +75,7 @@ func (h *handler) calculateSplitComplimentary(w http.ResponseWriter, r *http.Req
 
 	c := h.Calculator.CalculateSplitComplimentary(&inColor)
 
-	color, err := json.Marshal(c)
+	color, err := json.MarshalIndent(c, "", "\t")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -92,7 +93,7 @@ func (h *handler) calculateTriadic(w http.ResponseWriter, r *http.Request) {
 
 	c := h.Calculator.CalculateTriadic(&inColor)
 
-	color, err := json.Marshal(c)
+	color, err := json.MarshalIndent(c, "", "\t")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -110,7 +111,7 @@ func (h *handler) calculateTetradic(w http.ResponseWriter, r *http.Request) {
 
 	c := h.Calculator.CalculateTetradic(&inColor)
 
-	color, err := json.Marshal(c)
+	color, err := json.MarshalIndent(c, "", "\t")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
