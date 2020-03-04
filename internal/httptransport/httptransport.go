@@ -65,6 +65,7 @@ func (h *handler) calculateComplimentary(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Write(color)
 }
+
 func (h *handler) calculateSplitComplimentary(w http.ResponseWriter, r *http.Request) {
 	var inColor palettecalculator.Color
 	defer r.Body.Close()
@@ -83,6 +84,7 @@ func (h *handler) calculateSplitComplimentary(w http.ResponseWriter, r *http.Req
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Write(color)
 }
+
 func (h *handler) calculateTriadic(w http.ResponseWriter, r *http.Request) {
 	var inColor palettecalculator.Color
 	defer r.Body.Close()
@@ -101,6 +103,7 @@ func (h *handler) calculateTriadic(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Write(color)
 }
+
 func (h *handler) calculateTetradic(w http.ResponseWriter, r *http.Request) {
 	var inColor palettecalculator.Color
 	defer r.Body.Close()
